@@ -1,5 +1,9 @@
 Import-Module posh-git
 
+# Increase history
+$MaximumHistoryCount = 10000
+
+
 ### Alias ###
 #toggl
 Set-Alias -Name t -Value toggl
@@ -7,8 +11,6 @@ Set-Alias -Name t -Value toggl
 #rm -rf
 Set-Alias -Name rm-rf -Value "rm -r -fo"
 
-# Increase history
-$MaximumHistoryCount = 10000
 
 ### Functions ###
 #> sudo [application/command]
