@@ -45,12 +45,12 @@ if ((Test-Path Function:\TabExpansion) -and -not (Test-Path Function:\togglTabEx
 
 function TabExpansion($line, $lastWord) {
     $lastBlock = [regex]::Split($line, '[|;]')[-1].TrimStart()
-    $aliases = @("toggl") + @(Get-Alias | where { $_.Definition -eq "toggl" } | select -Exp Name)
+    $aliases = @("toggl") + @(Get-Alias | Where-Object { $_.Definition -eq "toggl" } | Select-Object -Exp Name)
     $aliasPattern = "($($aliases -join '|'))"
     if($lastBlock -match "^$aliasPattern ") {
         $Env:_TOGGL_COMPLETE = "complete-powershell"
         $Env:COMMANDLINE = "$lastBlock"
-        (toggl) | ? {$_.trim() -ne "" }
+        (toggl) | Where-Object {$_.trim() -ne "" }
         Remove-Item Env:_TOGGL_COMPLETE
         Remove-Item Env:COMMANDLINE
     }
@@ -292,4 +292,4 @@ Register-ArgumentCompleter -CommandName 'gh' -ScriptBlock {
     }
 }
 
-Write-Host "$($PSScriptRoot)\profile.ps1 loaded";
+Write-Output "$($PSScriptRoot)\profile.ps1 loaded";
