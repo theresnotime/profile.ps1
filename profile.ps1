@@ -1,43 +1,10 @@
 Import-Module posh-git
 
+# Include aliases file
+. $PSScriptRoot\includes\aliases.ps1
+
 # Increase history
 $MaximumHistoryCount = 10000
-
-
-### Alias ###
-#toggl
-Set-Alias -Name t -Value toggl
-
-#rm -rf
-Set-Alias -Name rm-rf -Value "rm -r -fo"
-
-
-### Functions ###
-#> sudo [application/command]
-function sudo {
-	$file, [string]$arguments = $args;
-	$psi = new-object System.Diagnostics.ProcessStartInfo $file;
-	$psi.Arguments = $arguments;
-	$psi.Verb = "runas";
-	$psi.WorkingDirectory = get-location;
-	[System.Diagnostics.Process]::Start($psi) >> $null
-}
-
-#> touch [filename]
-function touch($file) {
-	"" | Out-File $file -Encoding ASCII
-}
-
-Function tstart {
-	toggl start
-}
-Function tstop {
-	toggl stop
-}
-Function tls {
-	toggl ls
-}
-
 
 if ((Test-Path Function:\TabExpansion) -and -not (Test-Path Function:\togglTabExpansionBackup)) {
     Rename-Item Function:\TabExpansion togglTabExpansionBackup
@@ -292,4 +259,5 @@ Register-ArgumentCompleter -CommandName 'gh' -ScriptBlock {
     }
 }
 
+# Done
 Write-Output "$($PSScriptRoot)\profile.ps1 loaded";
